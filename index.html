@@ -301,7 +301,7 @@
         </div>
 
         <!-- ================= MINI PLAYER ================= -->
-        <div id="mini-player" class="hidden absolute bottom-24 w-[90%] max-w-sm left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 dark:border-slate-700 p-3 flex items-center gap-3 cursor-pointer z-30 transition-all hover:scale-[1.02]" onclick="showView('player')">
+        <div id="mini-player" class="hidden absolute bottom-28 w-[90%] max-w-sm left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 dark:border-slate-700 p-3 flex items-center gap-3 cursor-pointer z-30 transition-all hover:scale-[1.02]" onclick="showView('player')">
             <img id="mini-cover" src="" class="w-12 h-12 object-cover rounded-lg bg-gray-100 dark:bg-slate-900" />
             <div class="flex-1 overflow-hidden">
                 <h4 id="mini-title" class="font-bold text-sm text-gray-900 dark:text-white truncate"></h4>
@@ -738,19 +738,19 @@
             }
             
             booksContainer.innerHTML = filteredBooks.map(book => `
-                <div class="bg-white dark:bg-slate-900 rounded-3xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-gray-50 dark:border-slate-800 cursor-pointer hover:border-violet-200 dark:hover:border-violet-900 transition-colors" onclick="openPlayer('${book.id}', false)">
-                    <div class="flex gap-4 relative">
-                        <img src="${book.coverUrl}" alt="Cover" class="w-24 h-32 object-cover rounded-xl shadow-md bg-gray-100 dark:bg-slate-800" />
-                        <div class="flex-1 pt-1 flex flex-col overflow-hidden">
-                            <h4 class="font-bold text-gray-900 dark:text-white leading-tight text-lg mb-1 truncate" title="${book.title}">${book.title}</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium mb-auto truncate">${book.author}</p>
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-4 shadow-sm border border-gray-100 dark:border-slate-800 cursor-pointer hover:border-violet-300 dark:hover:border-violet-700 transition-colors group" onclick="openPlayer('${book.id}', false)">
+                    <div class="flex gap-4 relative h-full">
+                        <img src="${book.coverUrl}" alt="Cover" class="w-24 h-36 object-cover rounded-xl shadow-md bg-gray-100 dark:bg-slate-800 flex-shrink-0" />
+                        <div class="flex-1 flex flex-col min-w-0 py-1">
+                            <h4 class="font-bold text-gray-900 dark:text-white leading-tight text-base md:text-lg mb-1 line-clamp-2 break-words" title="${book.title}">${book.title}</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium line-clamp-1">${book.author}</p>
                             
-                            <div class="flex items-center gap-3 mt-3">
+                            <div class="flex items-center gap-2 mt-auto pt-3">
                                 <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-slate-800 px-2 py-1 rounded-md font-medium whitespace-nowrap">
                                     ${book.chapters.length > 1 ? `${book.chapters.length} Chaps` : 'Audio'}
                                 </span>
-                                <button onclick="event.stopPropagation(); openPlayer('${book.id}', true)" class="ml-auto bg-gray-900 dark:bg-violet-600 hover:bg-black dark:hover:bg-violet-700 text-white text-sm font-semibold py-2 px-5 rounded-full flex items-center gap-2 transition-transform active:scale-95">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Play
+                                <button onclick="event.stopPropagation(); openPlayer('${book.id}', true)" class="ml-auto bg-gray-900 dark:bg-violet-600 hover:bg-black dark:hover:bg-violet-700 text-white text-xs md:text-sm font-semibold py-1.5 md:py-2 px-4 rounded-full flex items-center gap-1.5 transition-transform active:scale-95">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Play
                                 </button>
                             </div>
                         </div>
@@ -870,12 +870,17 @@
         }
 
         function updatePlayPauseIcon() {
-            if (state.isPlaying) {
-                iconPlay.classList.add('hidden');
-                iconPause.classList.remove('hidden');
-            } else {
-                iconPlay.classList.remove('hidden');
-                iconPause.classList.add('hidden');
+            const playIcon = document.getElementById('icon-play');
+            const pauseIcon = document.getElementById('icon-pause');
+            
+            if (playIcon && pauseIcon) {
+                if (state.isPlaying) {
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                } else {
+                    playIcon.classList.remove('hidden');
+                    pauseIcon.classList.add('hidden');
+                }
             }
         }
 
@@ -1087,7 +1092,7 @@
             resultsContainer.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 mt-10">Searching Open Library...</div>';
 
             try {
-                const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`);
+                const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10&fields=key,title,author_name,cover_i,subject`);
                 const data = await response.json();
                 
                 if (data.docs && data.docs.length > 0) {
@@ -1096,8 +1101,8 @@
                         const author = item.author_name ? item.author_name.join(', ') : 'Unknown Author';
                         const coverUrl = item.cover_i ? `https://covers.openlibrary.org/b/id/${item.cover_i}-L.jpg` : '';
                         
-                        // Grab top 3 subjects as tags
-                        const tagsArr = item.subject ? item.subject.slice(0, 3) : [];
+                        // Grab top 4 concise subjects as tags
+                        const tagsArr = item.subject ? item.subject.filter(t => t.length < 25 && !t.includes(" - ")).slice(0, 4) : [];
                         const tagsJoined = tagsArr.join(', ');
                         
                         // Stringify data safely for DOM event injection
