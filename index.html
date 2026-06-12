@@ -65,7 +65,7 @@
         <input type="file" accept=".json" id="import-upload" class="hidden" onchange="importData(event)" />
 
         <!-- ================= LIBRARY VIEW ================= -->
-        <div id="library-view" class="flex-1 overflow-y-auto pb-28 flex flex-col w-full">
+        <div id="library-view" class="flex-1 overflow-y-auto pb-24 flex flex-col w-full">
             <!-- Header -->
             <div class="p-6 md:px-12 flex justify-between items-center bg-white dark:bg-slate-900 sticky top-0 z-10 transition-colors duration-300 border-b border-transparent dark:border-slate-800">
                 <div class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity" onclick="showView('profile')">
@@ -77,12 +77,9 @@
                         <p id="header-name" class="font-bold text-gray-900 dark:text-white">Reader</p>
                     </div>
                 </div>
-                <div class="flex gap-4 text-gray-600 dark:text-gray-300">
-                    <button onclick="toggleLocalSearch()" class="hover:text-violet-600 transition-colors p-2 -mr-2">
+                <div class="flex gap-2 text-gray-600 dark:text-gray-300">
+                    <button onclick="toggleLocalSearch()" class="hover:text-violet-600 transition-colors p-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    </button>
-                    <button class="hover:text-violet-600 transition-colors p-2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                     </button>
                 </div>
             </div>
@@ -225,7 +222,7 @@
                     </div>
 
                     <!-- Bottom Toggles (Jump To, Bookmarks & Speed) -->
-                    <div class="w-full flex items-center justify-between pb-8 lg:pb-0 px-2 lg:px-0 text-sm">
+                    <div class="w-full flex items-center justify-between pb-4 px-2 lg:px-0 text-sm">
                         <div class="flex gap-2">
                             <button onclick="openJumpToModal()" class="flex items-center gap-2 bg-gray-100 dark:bg-slate-800 px-4 py-2 rounded-full text-gray-700 dark:text-gray-300 font-bold text-xs hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors shadow-sm">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Jump
@@ -301,7 +298,7 @@
         </div>
 
         <!-- ================= MINI PLAYER ================= -->
-        <div id="mini-player" class="hidden absolute bottom-28 w-[90%] max-w-sm left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 dark:border-slate-700 p-3 flex items-center gap-3 cursor-pointer z-30 transition-all hover:scale-[1.02]" onclick="showView('player')">
+        <div id="mini-player" class="hidden absolute bottom-20 w-[90%] max-w-sm left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-100 dark:border-slate-700 p-3 flex items-center gap-3 cursor-pointer z-30 transition-all hover:scale-[1.02]" onclick="showView('player')">
             <img id="mini-cover" src="" class="w-12 h-12 object-cover rounded-lg bg-gray-100 dark:bg-slate-900" />
             <div class="flex-1 overflow-hidden">
                 <h4 id="mini-title" class="font-bold text-sm text-gray-900 dark:text-white truncate"></h4>
@@ -314,21 +311,21 @@
         </div>
 
         <!-- ================= BOTTOM NAVIGATION ================= -->
-        <div class="fixed bottom-6 w-full max-w-4xl lg:max-w-5xl px-6 z-20 pointer-events-none flex justify-center">
-            <div class="bg-gray-900 dark:bg-slate-800 text-gray-400 rounded-3xl p-2 flex justify-around items-center shadow-[0_8px_30px_rgb(0,0,0,0.15)] w-full max-w-md pointer-events-auto">
-                <button onclick="showView('library')" id="nav-home" title="Home" class="w-16 py-2 flex flex-col items-center gap-1 transition-colors text-violet-400 font-bold">
+        <div class="w-full bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 z-20 flex-shrink-0 transition-colors duration-300">
+            <div class="max-w-md mx-auto flex justify-around items-center p-2">
+                <button onclick="showView('library')" id="nav-home" title="Home" class="w-16 py-2 flex flex-col items-center gap-1 transition-colors text-violet-600 dark:text-violet-400 font-bold">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span class="text-[10px]">Home</span>
                 </button>
-                <button onclick="toggleLocalSearch()" title="Search Library" class="w-16 py-2 flex flex-col items-center gap-1 hover:text-white transition-colors">
+                <button onclick="toggleLocalSearch()" title="Search Library" class="w-16 py-2 flex flex-col items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors text-gray-500 dark:text-gray-400">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     <span class="text-[10px]">Search</span>
                 </button>
-                <button onclick="showView('library')" title="Your Library" class="w-16 py-2 flex flex-col items-center gap-1 hover:text-white transition-colors">
+                <button onclick="showView('library')" title="Your Library" class="w-16 py-2 flex flex-col items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors text-gray-500 dark:text-gray-400">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     <span class="text-[10px]">Library</span>
                 </button>
-                <button onclick="showView('profile')" id="nav-profile" title="User Profile" class="w-16 py-2 flex flex-col items-center gap-1 hover:text-white transition-colors">
+                <button onclick="showView('profile')" id="nav-profile" title="User Profile" class="w-16 py-2 flex flex-col items-center gap-1 hover:text-slate-900 dark:hover:text-white transition-colors text-gray-500 dark:text-gray-400">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     <span class="text-[10px]">Profile</span>
                 </button>
